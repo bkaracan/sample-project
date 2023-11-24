@@ -20,9 +20,9 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableMethodSecurity  // Bu anotasyon metot düzeyinde güvenliği (örn. @PreAuthorize) etkinleştirir.
 public class SecurityConfig {
 
-    // Parola şifreleme için bir BCryptPasswordEncoder bean'i tarantula.
+    // Parola şifreleme için bir BCryptPasswordEncoder bean'i tanımla.
     @Bean
-    public BCryptPasswordEncoder passwordEncoder() {
+    public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
@@ -32,13 +32,13 @@ public class SecurityConfig {
     public UserDetailsService users() {
         UserDetails user1 = User.builder()
                 .username("ahukaracan")
-                .password("ahu123!")  // Dikkat: Gerçek uygulamalarda şifrelerin şifrelenmesi gerekir!
+                .password(bCryptPasswordEncoder().encode("ahu123!"))
                 .roles("USER")  // Kullanıcıya "USER" rolü atanır.
                 .build();
 
         UserDetails admin = User.builder()
                 .username("bkaracan")
-                .password("burak123!")  // Dikkat: Gerçek uygulamalarda şifrelerin şifrelenmesi gerekir!
+                .password(bCryptPasswordEncoder().encode("burak123!"))
                 .roles("ADMIN")  // Kullanıcıya "ADMIN" rolü atanır.
                 .build();
 
